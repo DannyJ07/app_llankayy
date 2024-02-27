@@ -1,16 +1,14 @@
-import 'package:app_llankay/home.dart';
-import 'package:app_llankay/vistas/createUser.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class CreateUser extends StatefulWidget {
+  const CreateUser({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<CreateUser> createState() => _CreateUserState();
 }
 
-class _LoginState extends State<Login> {
+class _CreateUserState extends State<CreateUser> {
   late String email, password;
   final _formKey = GlobalKey<FormState>();
 
@@ -32,7 +30,7 @@ class _LoginState extends State<Login> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               const Text(
-                'LLANKAY', // Título en grande
+                'CREAR USUARIO', // Título en grande
                 style: TextStyle(
                   fontSize: 24.0, // Tamaño de fuente grande
                   fontWeight: FontWeight.bold, // Negrita
@@ -54,9 +52,7 @@ class _LoginState extends State<Login> {
               ),
 
               const SizedBox(height: 20.0),
-              _buildLoginButton(),
-              const SizedBox(height: 20.0),
-              _buildSignUpText(),
+              _buildCrearButton(),
             ],
           ),
         ),
@@ -140,69 +136,34 @@ class _LoginState extends State<Login> {
     );
   }*/
 
-  Widget _buildLoginButton() {
+  Widget _buildCrearButton() {
     return ElevatedButton(
       onPressed: () async {
         if (_formKey.currentState!.validate()) {
           _formKey.currentState!.save();
-          try {
-            UserCredential? credenciales = await login(email, password);
-            if (credenciales != null) {
-              if (credenciales.user != null) {
-                if (credenciales.user!.emailVerified) {
-                  Navigator.pushAndRemoveUntil(
-                      context as BuildContext,
-                      MaterialPageRoute(builder: (context) => MyHomePage()),
-                      (Route<dynamic> route) => false);
-                } else {
-                  setState(() {
-                    error = "Debes verificar tu correo antes de acceder";
-                  });
-                }
-              }
+          UserCredential? credenciales = await crear(email, password);
+          if (credenciales != null) {
+            if (credenciales.user != null) {
+              await credenciales.user!.sendEmailVerification();
+              Navigator.of(context).pop();
             }
-          } catch (e) {
-            setState(() {
-              error =
-                  e.toString(); // Mostrar la excepción como mensaje de error
-            });
           }
         }
       },
-      child: Text('Login'),
+      child: Text('Crear Usuario'),
     );
   }
 
-  Widget _buildSignUpText() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text('Don\'t have an account?'),
-        const SizedBox(width: 5.0),
-        GestureDetector(
-          onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => CreateUser()));
-          },
-          child: Text(
-            'Sign Up',
-            style: TextStyle(color: Colors.blue),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Future<UserCredential?> login(String email, String passwd) async {
+  Future<UserCredential?> crear(String email, String passwd) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+          .createUserWithEmailAndPassword(email: email, password: password);
       return userCredential;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
+      if (e.code == 'email-already-in-use') {
         //todo usuario no encontrado
         setState(() {
-          error = "usuario no encontrado";
+          error = "El correro está en uso";
         });
       }
       if (e.code == 'wrong-password') {

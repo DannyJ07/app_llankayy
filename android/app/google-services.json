@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "113628914665",
+    "project_id": "bdd-llankay",
+    "storage_bucket": "bdd-llankay.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:113628914665:android:48c030c9f0c5cd94b2a178",
+        "android_client_info": {
+          "package_name": "com.example.app_llankay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "113628914665-c72pnaqv7mhromc8omalr3gn7jn8bol1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.app_llankay",
+            "certificate_hash": "e9166829f441b9b40eafe9765fbd72de1f5a991a"
+          }
+        },
+        {
+          "client_id": "113628914665-818uervn7bunoufbsist4na91iva56lj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuvJzhDHI5JN2K3dNB2NhpF-rzJ07L5TU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "113628914665-818uervn7bunoufbsist4na91iva56lj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
