@@ -1,4 +1,5 @@
 import 'package:app_llankay/vistas/login.dart';
+import 'package:app_llankay/vistas/offerJob.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -72,7 +73,10 @@ class _MyHomePageState extends State<MyHomePage> {
             SizedBox(height: 50.0),
             ElevatedButton(
               onPressed: () {
-                // Acción cuando se presiona el botón "Cliente"
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Offer()),
+                );
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(200, 50),
@@ -88,9 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             SizedBox(height: 20.0),
             ElevatedButton(
-              onPressed: () {
-                // Acción cuando se presiona el botón "Especialista"
-              },
+              onPressed: () {},
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(200, 50),
                 primary: Color.fromARGB(255, 255, 255, 255),
