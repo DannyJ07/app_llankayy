@@ -34,16 +34,16 @@ class _LoginState extends State<Login> {
               const Text(
                 'LLANKAY', // Título en grande
                 style: TextStyle(
-                  fontSize: 24.0, // Tamaño de fuente grande
-                  fontWeight: FontWeight.bold, // Negrita
-                ),
+                    fontSize: 60.0, // Tamaño de fuente grande
+                    fontWeight: FontWeight.bold, // Negrita
+                    color: Color.fromARGB(255, 241, 182, 3)),
               ),
               _buildLogo(), // Logo debajo del título
               const SizedBox(height: 20.0),
               Offstage(
                 offstage: error == '',
                 child: Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(5.0),
                   child: Text(error,
                       style: TextStyle(color: Colors.red, fontSize: 16)),
                 ),
@@ -65,11 +65,12 @@ class _LoginState extends State<Login> {
   }
 
   Widget _buildLogo() {
-    return Image.network(
-      'https://static.vecteezy.com/system/resources/previews/006/303/647/non_2x/job-waiter-logo-icon-symbol-designs-vector.jpg',
+    return Image(
       // Especifica un tamaño si es necesario
-      width: 100,
-      height: 100,
+      width: 300,
+      height: 300,
+      image:
+          AssetImage('assets/logo.png'), // Cambiado de Image.asset a AssetImage
       // Ajusta el comportamiento de la imagen según tus necesidades
       fit: BoxFit.contain,
     );
@@ -90,7 +91,7 @@ class _LoginState extends State<Login> {
     return TextFormField(
         decoration: InputDecoration(
           hintText: 'Email',
-          prefixIcon: Icon(Icons.email),
+          prefixIcon: Icon(Icons.email, color: Color.fromARGB(255, 4, 62, 109)),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),
@@ -111,7 +112,7 @@ class _LoginState extends State<Login> {
     return TextFormField(
         decoration: InputDecoration(
           hintText: 'Password',
-          prefixIcon: Icon(Icons.lock),
+          prefixIcon: Icon(Icons.lock, color: Color.fromARGB(255, 4, 62, 109)),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),
@@ -169,7 +170,15 @@ class _LoginState extends State<Login> {
           }
         }
       },
-      child: Text('Login'),
+      style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white,
+        backgroundColor: Color.fromARGB(
+            255, 4, 62, 109), // Cambia el color de texto del botón
+      ),
+      child: Text(
+        'Login',
+        style: TextStyle(fontSize: 20),
+      ),
     );
   }
 
@@ -177,16 +186,16 @@ class _LoginState extends State<Login> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Text('Don\'t have an account?'),
-        const SizedBox(width: 5.0),
+        Text('¿No tienes una cuenta?', style: TextStyle(fontSize: 15)),
+        const SizedBox(width: 10.0),
         GestureDetector(
           onTap: () {
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => CreateUser()));
           },
           child: Text(
-            'Sign Up',
-            style: TextStyle(color: Colors.blue),
+            'Registrarse',
+            style: TextStyle(color: Color.fromARGB(255, 202, 156, 18)),
           ),
         ),
       ],

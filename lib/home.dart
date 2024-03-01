@@ -2,6 +2,7 @@ import 'package:app_llankay/vistas/login.dart';
 import 'package:app_llankay/vistas/offerJob.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -22,11 +23,31 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: Container(
+          color: Colors.white,
+          child: Column(
+            children: [
+              Container(
+                child: Image(
+                  width: 200,
+                  height: 200,
+                  image: AssetImage('assets/logo.png'),
+                ),
+              ),
+              Text("Perfil"),
+            ],
+          ),
+        ),
+      ),
       appBar: AppBar(
-        title: Text('Home Page'), // Título
+        title: Text('Inicio'), // Título
         actions: [
           IconButton(
-            icon: Icon(Icons.logout),
+            icon: Icon(
+              Icons.logout,
+              color: Color.fromARGB(255, 224, 169, 3),
+            ),
             onPressed: () {
               FirebaseAuth.instance.signOut();
               Navigator.pushAndRemoveUntil(
@@ -37,6 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
             },
           ),
         ],
+        backgroundColor: Color.fromARGB(255, 4, 62, 109),
+        foregroundColor: Color.fromARGB(255, 255, 255, 255),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -44,28 +67,20 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: EdgeInsets.all(20.0),
-              child: Text(
-                'LLANKAY',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+                padding: EdgeInsets.all(20),
+                child: Image(
+                  // Especifica un tamaño si es necesario
+                  width: 300,
+                  height: 300,
+                  image: AssetImage(
+                      'assets/logo.png'), // Cambiado de Image.asset a AssetImage
+                  // Ajusta el comportamiento de la imagen según tus necesidades
+                  fit: BoxFit.contain,
+                )),
             Padding(
-              padding: EdgeInsets.all(20.0),
-              child: Image.network(
-                'https://static.vecteezy.com/system/resources/previews/006/303/647/non_2x/job-waiter-logo-icon-symbol-designs-vector.jpg',
-                width: 150,
-                height: 150,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(20.0),
+              padding: EdgeInsets.all(0.0),
               child: Text(
-                'Bienvenido, selecciona con qué tipo de usuario te identificas:',
+                'Bienvenido, selecciona que actividad deseas hacer:',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 18.0),
               ),
@@ -80,7 +95,8 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(200, 50),
-                primary: Color.fromARGB(255, 255, 255, 255),
+                foregroundColor: Colors.white,
+                backgroundColor: Color.fromARGB(255, 4, 62, 109),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -95,7 +111,8 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {},
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(200, 50),
-                primary: Color.fromARGB(255, 255, 255, 255),
+                foregroundColor: Colors.white,
+                backgroundColor: Color.fromARGB(255, 4, 62, 109),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),

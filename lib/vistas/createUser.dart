@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:app_llankay/vistas/login.dart';
 
 class CreateUser extends StatefulWidget {
   const CreateUser({super.key});
@@ -23,20 +24,35 @@ class _CreateUserState extends State<CreateUser> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        // Agrega un botón de flecha para regresar
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color.fromARGB(255, 224, 169, 3),
+          ),
+          onPressed: () {
+            Navigator.pop(context); // Regresar a la pantalla anterior
+          },
+        ),
+        backgroundColor: Color.fromARGB(255, 4, 62, 109),
+      ),
       body: Center(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              _buildLogo(), // Logo debajo del título
               const Text(
                 'CREAR USUARIO', // Título en grande
                 style: TextStyle(
-                  fontSize: 24.0, // Tamaño de fuente grande
-                  fontWeight: FontWeight.bold, // Negrita
+                  fontSize: 40.0, // Tamaño de fuente grande
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 224, 169, 3), // Negrita
                 ),
               ),
-              _buildLogo(), // Logo debajo del título
+
               const SizedBox(height: 20.0),
               Offstage(
                 offstage: error == '',
@@ -53,6 +69,8 @@ class _CreateUserState extends State<CreateUser> {
 
               const SizedBox(height: 20.0),
               _buildCrearButton(),
+              const SizedBox(height: 20.0),
+              _buildSignUpText(),
             ],
           ),
         ),
@@ -61,11 +79,12 @@ class _CreateUserState extends State<CreateUser> {
   }
 
   Widget _buildLogo() {
-    return Image.network(
-      'https://static.vecteezy.com/system/resources/previews/006/303/647/non_2x/job-waiter-logo-icon-symbol-designs-vector.jpg',
+    return Image(
       // Especifica un tamaño si es necesario
-      width: 100,
-      height: 100,
+      width: 300,
+      height: 300,
+      image:
+          AssetImage('assets/logo.png'), // Cambiado de Image.asset a AssetImage
       // Ajusta el comportamiento de la imagen según tus necesidades
       fit: BoxFit.contain,
     );
@@ -86,7 +105,7 @@ class _CreateUserState extends State<CreateUser> {
     return TextFormField(
         decoration: InputDecoration(
           hintText: 'Email',
-          prefixIcon: Icon(Icons.email),
+          prefixIcon: Icon(Icons.email, color: Color.fromARGB(255, 4, 62, 109)),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),
@@ -107,7 +126,7 @@ class _CreateUserState extends State<CreateUser> {
     return TextFormField(
         decoration: InputDecoration(
           hintText: 'Password',
-          prefixIcon: Icon(Icons.lock),
+          prefixIcon: Icon(Icons.lock, color: Color.fromARGB(255, 4, 62, 109)),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),
@@ -150,7 +169,35 @@ class _CreateUserState extends State<CreateUser> {
           }
         }
       },
-      child: Text('Crear Usuario'),
+      style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white,
+        backgroundColor: Color.fromARGB(
+            255, 4, 62, 109), // Cambia el color de texto del botón
+      ),
+      child: Text(
+        'Registrarse',
+        style: TextStyle(fontSize: 20),
+      ),
+    );
+  }
+
+  Widget _buildSignUpText() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text('¿Ya tienes una cuenta?', style: TextStyle(fontSize: 15)),
+        const SizedBox(width: 10.0),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Login()));
+          },
+          child: Text(
+            'Iniciar Sesión',
+            style: TextStyle(color: Color.fromARGB(255, 202, 156, 18)),
+          ),
+        ),
+      ],
     );
   }
 
