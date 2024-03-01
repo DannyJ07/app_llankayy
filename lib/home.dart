@@ -80,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(200, 50),
-                primary: Color.fromARGB(255, 255, 255, 255),
+                backgroundColor: Color.fromARGB(255, 255, 255, 255),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -95,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {},
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(200, 50),
-                primary: Color.fromARGB(255, 255, 255, 255),
+                backgroundColor: Color.fromARGB(255, 255, 255, 255),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
