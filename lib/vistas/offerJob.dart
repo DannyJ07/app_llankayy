@@ -29,7 +29,10 @@ class _OfferState extends State<Offer> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('NUEVO REGISTRO'),
+        title: Text('Ofertar Trabajo'),
+        centerTitle: true, // Centrar el título
+        backgroundColor: Color.fromARGB(255, 4, 62, 109),
+        foregroundColor: Color.fromARGB(255, 255, 255, 255),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -38,28 +41,44 @@ class _OfferState extends State<Offer> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                DropdownButtonFormField<String>(
-                  value: selectedCategory,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      selectedCategory = newValue;
-                    });
-                  },
-                  items: categories.map((String category) {
-                    return DropdownMenuItem<String>(
-                      value: category,
-                      child: Text(category),
-                    );
-                  }).toList(),
-                  decoration: const InputDecoration(
-                    labelText: 'Categoría',
+                // Título del formulario
+                Text(
+                  'Solicitud',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 24, // Tamaño de fuente deseado
+                    fontWeight: FontWeight.bold, // Opcional: Peso de la fuente
                   ),
                 ),
+                DropdownButtonFormField<String>(
+                    value: selectedCategory,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedCategory = newValue;
+                      });
+                    },
+                    items: categories.map((String category) {
+                      return DropdownMenuItem<String>(
+                        value: category,
+                        child: Text(category),
+                      );
+                    }).toList(),
+                    decoration: const InputDecoration(
+                      labelText: 'Categoría',
+                      labelStyle: TextStyle(fontSize: 20),
+                    ),
+                    validator: (newvalue) {
+                      if (newvalue!.isEmpty) {
+                        return "El campo es obligatorio";
+                      }
+                      return null;
+                    }),
                 SizedBox(height: 16),
                 TextFormField(
                   controller: descriptionController,
                   decoration: InputDecoration(
                     labelText: 'Descripción',
+                    labelStyle: TextStyle(fontSize: 20),
                   ),
                 ),
                 SizedBox(height: 16),
@@ -67,6 +86,7 @@ class _OfferState extends State<Offer> {
                   controller: addressController,
                   decoration: InputDecoration(
                     labelText: 'Dirección',
+                    labelStyle: TextStyle(fontSize: 20),
                   ),
                 ),
                 SizedBox(height: 16),
@@ -75,6 +95,7 @@ class _OfferState extends State<Offer> {
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
                   decoration: InputDecoration(
                     labelText: 'Precio \$',
+                    labelStyle: TextStyle(fontSize: 20),
                   ),
                   validator: (value) {
                     if (value != null && double.tryParse(value) == null) {
@@ -105,6 +126,7 @@ class _OfferState extends State<Offer> {
                           child: TextFormField(
                             decoration: InputDecoration(
                               labelText: 'Fecha',
+                              labelStyle: TextStyle(fontSize: 20),
                             ),
                             controller: TextEditingController(
                               text: selectedDate != null
@@ -116,7 +138,8 @@ class _OfferState extends State<Offer> {
                       ),
                     ),
                     IconButton(
-                      icon: Icon(Icons.calendar_today),
+                      icon: Icon(Icons.calendar_today,
+                          color: Color.fromARGB(255, 224, 169, 3)),
                       onPressed: () async {
                         DateTime? pickedDate = await showDatePicker(
                           context: context,
@@ -153,6 +176,7 @@ class _OfferState extends State<Offer> {
                           child: TextFormField(
                             decoration: InputDecoration(
                               labelText: 'Hora',
+                              labelStyle: TextStyle(fontSize: 20),
                             ),
                             controller: TextEditingController(
                               text: selectedTime != null
@@ -164,7 +188,8 @@ class _OfferState extends State<Offer> {
                       ),
                     ),
                     IconButton(
-                      icon: Icon(Icons.access_time),
+                      icon: Icon(Icons.access_time,
+                          color: Color.fromARGB(255, 224, 169, 3)),
                       onPressed: () async {
                         TimeOfDay? pickedTime = await showTimePicker(
                           context: context,
@@ -194,14 +219,25 @@ class _OfferState extends State<Offer> {
 
                     // Llamar a AddOffer con los datos convertidos a String
                     await AddOffer(
+                        selectedCategory!,
                         descriptionController.text,
                         addressController.text,
                         priceController.text,
-                        selectedCategory!,
                         dateString,
                         timeString);
                   },
-                  child: Text('REGISTRAR'),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(200, 50),
+                    foregroundColor: Colors.white,
+                    backgroundColor: Color.fromARGB(255, 4, 62, 109),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: Text(
+                    'Publicar',
+                    style: TextStyle(fontSize: 20),
+                  ),
                 ),
               ],
             ),
