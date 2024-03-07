@@ -1,5 +1,6 @@
 import 'package:app_llankay/vistas/login.dart';
 import 'package:app_llankay/vistas/offerJob.dart';
+import 'package:app_llankay/vistas/searchJob.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -108,7 +109,12 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             SizedBox(height: 20.0),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SearchJob()),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(200, 50),
                 foregroundColor: Colors.white,

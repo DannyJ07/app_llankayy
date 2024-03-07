@@ -194,10 +194,10 @@ class _OfferState extends State<Offer> {
 
                     // Llamar a AddOffer con los datos convertidos a String
                     await AddOffer(
+                        selectedCategory!,
                         descriptionController.text,
                         addressController.text,
                         priceController.text,
-                        selectedCategory!,
                         dateString,
                         timeString);
                   },
