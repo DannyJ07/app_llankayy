@@ -40,6 +40,7 @@ class _LoginState extends State<Login> {
               ),
               _buildLogo(), // Logo debajo del título
               const SizedBox(height: 20.0),
+
               Offstage(
                 offstage: error == '',
                 child: Padding(
@@ -202,7 +203,7 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Future<UserCredential?> login(String email, String passwd) async {
+  Future<UserCredential?> login(String email, String password) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
@@ -211,13 +212,13 @@ class _LoginState extends State<Login> {
       if (e.code == 'user-not-found') {
         //todo usuario no encontrado
         setState(() {
-          error = "usuario no encontrado";
+          error = 'Usuario no encontrado';
         });
       }
       if (e.code == 'wrong-password') {
         //todo contrasenna incorrecta
         setState(() {
-          error = "contrasenna incorrecta";
+          error = 'Contraseña incorrecta';
         });
       }
     }

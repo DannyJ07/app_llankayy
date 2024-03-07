@@ -43,6 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       appBar: AppBar(
         title: Text('Inicio'), // Título
+        centerTitle: true, // Centrar el título
         actions: [
           IconButton(
             icon: Icon(
