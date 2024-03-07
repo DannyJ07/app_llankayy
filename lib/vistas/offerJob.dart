@@ -12,6 +12,8 @@ class _OfferState extends State<Offer> {
   TextEditingController descriptionController = TextEditingController(text: "");
   TextEditingController addressController = TextEditingController(text: "");
   TextEditingController priceController = TextEditingController(text: "");
+  TextEditingController phoneController = TextEditingController(text: "");
+  TextEditingController askForController = TextEditingController(text: "");
   String? selectedCategory;
   DateTime? selectedDate;
   TimeOfDay? selectedTime;
@@ -30,7 +32,7 @@ class _OfferState extends State<Offer> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Ofertar Trabajo'),
-        centerTitle: true, // Centrar el título
+        centerTitle: true,
         backgroundColor: Color.fromARGB(255, 4, 62, 109),
         foregroundColor: Color.fromARGB(255, 255, 255, 255),
       ),
@@ -41,38 +43,38 @@ class _OfferState extends State<Offer> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Título del formulario
                 Text(
                   'Solicitud',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 24, // Tamaño de fuente deseado
-                    fontWeight: FontWeight.bold, // Opcional: Peso de la fuente
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 DropdownButtonFormField<String>(
-                    value: selectedCategory,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        selectedCategory = newValue;
-                      });
-                    },
-                    items: categories.map((String category) {
-                      return DropdownMenuItem<String>(
-                        value: category,
-                        child: Text(category),
-                      );
-                    }).toList(),
-                    decoration: const InputDecoration(
-                      labelText: 'Categoría',
-                      labelStyle: TextStyle(fontSize: 20),
-                    ),
-                    validator: (newvalue) {
-                      if (newvalue!.isEmpty) {
-                        return "El campo es obligatorio";
-                      }
-                      return null;
-                    }),
+                  value: selectedCategory,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedCategory = newValue;
+                    });
+                  },
+                  items: categories.map((String category) {
+                    return DropdownMenuItem<String>(
+                      value: category,
+                      child: Text(category),
+                    );
+                  }).toList(),
+                  decoration: const InputDecoration(
+                    labelText: 'Categoría',
+                    labelStyle: TextStyle(fontSize: 20),
+                  ),
+                  validator: (newvalue) {
+                    if (newvalue!.isEmpty) {
+                      return "El campo es obligatorio";
+                    }
+                    return null;
+                  },
+                ),
                 SizedBox(height: 16),
                 TextFormField(
                   controller: descriptionController,
@@ -103,6 +105,23 @@ class _OfferState extends State<Offer> {
                     }
                     return null;
                   },
+                ),
+                SizedBox(height: 16),
+                TextFormField(
+                  controller: phoneController,
+                  keyboardType: TextInputType.phone,
+                  decoration: InputDecoration(
+                    labelText: 'Teléfono',
+                    labelStyle: TextStyle(fontSize: 20),
+                  ),
+                ),
+                SizedBox(height: 16),
+                TextFormField(
+                  controller: askForController,
+                  decoration: InputDecoration(
+                    labelText: 'Preguntar por',
+                    labelStyle: TextStyle(fontSize: 20),
+                  ),
                 ),
                 SizedBox(height: 16),
                 Row(
@@ -207,24 +226,24 @@ class _OfferState extends State<Offer> {
                 SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () async {
-                    // Convertir selectedDate a String
                     String dateString = selectedDate != null
                         ? "${selectedDate!.day}-${selectedDate!.month}-${selectedDate!.year}"
                         : '';
 
-                    // Convertir selectedTime a String
                     String timeString = selectedTime != null
                         ? "${selectedTime!.hour}:${selectedTime!.minute}"
                         : '';
 
-                    // Llamar a AddOffer con los datos convertidos a String
                     await AddOffer(
-                        selectedCategory!,
-                        descriptionController.text,
-                        addressController.text,
-                        priceController.text,
-                        dateString,
-                        timeString);
+                      selectedCategory!,
+                      descriptionController.text,
+                      addressController.text,
+                      priceController.text,
+                      dateString,
+                      timeString,
+                      phoneController.text,
+                      askForController.text,
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(200, 50),

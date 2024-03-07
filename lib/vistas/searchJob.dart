@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:app_llankay/servicios/serviceFirebase.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SearchJob extends StatefulWidget {
   const SearchJob({Key? key});
@@ -80,6 +84,49 @@ class _SearchJobState extends State<SearchJob> {
               Text('Fecha: ${offer['Fecha']}'),
               Text('Hora: ${offer['Hora']}'),
               Text('Precio: ${offer['Precio']}'),
+              Text('Contacto: ${offer['Contacto']}'),
+              ElevatedButton(
+                onPressed: () async {
+                  String telefono = offer[
+                      'Telefono']; // Obtenga el número de teléfono de la oferta
+                  final url = 'tel:$telefono';
+
+                  if (await canLaunch(url)) {
+                    try {
+                      await launch(url);
+                    } catch (error) {
+                      // Maneje los errores aquí
+                      print(error);
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text('Error'),
+                          content: Text('No se pudo llamar al contacto.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: Text('Aceptar'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                  } else {
+                    // Solicite permisos para Android si es necesario
+                    if (Platform.isAndroid) {
+                      await Permission.phone.request();
+                      if (await Permission.phone.isGranted) {
+                        await launch(url);
+                      } else {
+                        // Maneje el denegación de permisos
+                      }
+                    } else {
+                      // Maneje dispositivos que no sean Android
+                    }
+                  }
+                },
+                child: Text('CONTACTAR'),
+              ),
             ],
           ),
           actions: [
